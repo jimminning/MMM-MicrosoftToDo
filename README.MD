@@ -111,6 +111,10 @@ modules: [
       fade: true, //optional parameter: default value is false. True will fade the list towards the bottom from the point set in the fadePoint parameter
       fadePoint: 0.5, //optional parameter: decimal value between 0 and 1 sets the point where the fade effect will start,
       colorDueDate: false // optional parameter: default value is false.  True will display colors for overdue (red), upcoming (orange), and future (green) dates
+      showCompleted: {
+        enable: false, // Optional parameter:  default is false, when set to true completed tasks are displayed (crossed out)
+        completedAtBottom: false // Optional parameter:  default is false, when set to true completed tasks are displayed at the bottom of the list
+      }
     }
   },
 ]

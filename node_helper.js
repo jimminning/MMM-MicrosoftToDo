@@ -200,12 +200,24 @@ module.exports = NodeHelper.create({
     // TODO: Iterate through ALL the lists.  If plannedTasks, filter out those without
     var promises = listIds.map(async (listId) => {
       const promiseSelf = self;
-      var orderBy =
+
+      var orderByBase = "&$orderby=";
+      var orderByProperties = [];  
+      if (config.showCompleted.enable == true && config.showCompleted.completedAtBottom == true) {
+        orderByProperties.push("status");
+      }
+      switch (config.orderBy) {
         // sorting by subject is not supported anymore in API v1, hence falling back to created time
-        (config.orderBy === "subject" ? "&$orderby=createdDateTime" : "") +
-        (config.orderBy === "createdDate" ? "&$orderby=createdDateTime" : "") +
-        (config.orderBy === "dueDate" ? "&$orderby=duedatetime/datetime" : "");
-      var filterClause = "status ne 'completed'";
+        case 'subject':
+        case 'createdDate':
+          orderByProperties.push("createdDateTime")
+          break;
+        case 'dueDate':
+          orderByProperties.push("duedatetime/datetime")
+          break;
+      }
+      var orderBy = (orderByProperties.length > 0) ? orderByBase + orderByProperties.join(",") : "";
+      var filterClause = (config.showCompleted === true ? "" : "status ne 'completed'");
       if (config.plannedTasks.enable) {
         // default values from MMM-MicrosoftToDo.js are not considered as
         // the 'plannedTasks' configuration is handled by a nested object,

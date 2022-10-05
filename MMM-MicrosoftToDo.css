@@ -13,3 +13,7 @@
 .mmm-task-due-date.upcoming {
   color: green;
 }
+
+.mm-task-completed {
+  text-decoration:line-through;
+}

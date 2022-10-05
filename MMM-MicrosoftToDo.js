@@ -102,6 +102,10 @@ Module.register("MMM-MicrosoftToDo", {
           taskText.innerText = taskDue;
           taskText.className = classNames.join(" ");
 
+          if (self.config.showCompleted && element.status == 'completed') {
+            listSpan.className = "mmm-task-completed";
+          }
+
           listSpan.append(taskText);
 
           // add icon to recurring items
